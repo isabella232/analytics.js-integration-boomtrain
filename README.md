@@ -2,7 +2,7 @@ Boomtrain is a predictive intelligence platform for marketers that leverages mac
 
 ## Getting Started
 When you turn on Boomtrain in Segment, this is what happens:
-- Our snippet will start asynchronously loading Boomtrain's Javascript library onto your page.
+- The Boomtrain snippet will start asynchronously loading Boomtrain's Javascript library onto your page.
 - Once loaded, the Boomtrain Javascript library will automatically start sending "viewed" events to the Boomtrain system.
 - When users visit pages on your site, the "viewed" events sent to the Boomtrain system will trigger ingestion of your content and processing by our machine learning algorithms.
 - To start sending custom events and user data, use the Javascript methods described below.
