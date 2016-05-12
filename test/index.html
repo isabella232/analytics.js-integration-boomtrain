@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>integrations tests</title>
+    <meta property="og:type" content="blog">
+    <link rel="stylesheet" href="/node_modules/mocha/mocha.css">
+  </head>
+  <body>
+    <div id="mocha"></div>
+    <script src="/saucelabs.js"></script>
+    <script src="/node_modules/mocha/mocha.js"></script>
+    <script>
+      mocha.setup({
+        ui: 'bdd',
+        ignoreLeaks: true,
+        slow: 400,
+        timeout: 10000
+      });
+
+      var _onload = window.onload;
+      window.onload = function() {
+        if (typeof _onload === 'function') {
+          _onload.apply(this, arguments);
+        }
+
+        if (window.mochaPhantomJS) {
+          var runner = mochaPhantomJS.run();
+        } else if (window.saucelabs) {
+          var runner = saucelabs(mocha.run());
+        } else {
+          var runner = mocha.run();
+        }
+        var failedTests = [];
+        runner.on('end', function(){
+        window.mochaResults = runner.stats;
+        window.mochaResults.reports = failedTests;
+        });
+      };
+    </script>
+    <script src="/build.js"></script>
+  </body>
+</html>

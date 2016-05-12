@@ -1,0 +1,28 @@
+{
+  "name": "boomtrain_segment",
+  "version": "1.0.0",
+  "description": "",
+  "main": "lib/index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "make test-browser"
+  },
+  "engines": {
+    "node": ">=0.12.0",
+    "npm": ">=2.7.0"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "duo": "0.12.x",
+    "duo-test": "0.2.x",
+    "eslint": "0.x",
+    "eslint-config-segment": "^1.0.10",
+    "mocha": "*",
+    "mocha-phantomjs": "segmentio/mocha-phantomjs#master",
+    "phantomjs": "^1.9.17"
+  }
+
+}
