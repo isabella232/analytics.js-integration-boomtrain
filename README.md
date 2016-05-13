@@ -1,6 +1,15 @@
 Boomtrain is a predictive intelligence platform for marketers that leverages machine learning to drive increased clicks, engagement and revenue through customer communications. [Visit Website](http://boomtrain.com).
 
+The Boomtrain integration with Segment.io supports the `identify`, `track` and `page ` methods.  Our Javascript integration code is open sourced on Github. [Feel free to check it out](https://github.com/boomtrain/segmentio_integration).
+
 ## Getting Started
+Steps to connect.
+ - Turn on Boomtrain integration via Segment dashboard.
+ - Enter your Boomtrain API Key.  
+
+If you're not sure where to find your Boomtrain API Key, contact [Boomtrain Support](mailto:support@boomtrain.com) or your Boomtrain CSM directly.
+ 
+
 When you turn on Boomtrain in Segment, this is what happens:
 - The Boomtrain snippet will start asynchronously loading Boomtrain's Javascript library onto your page.
 - Once loaded, the Boomtrain Javascript library will automatically start sending "viewed" events to the Boomtrain system.
