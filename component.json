@@ -9,6 +9,7 @@
     "segmentio/facade": "^2.2.2",
     "segmentio/alias": "0.2.1",
     "segmentio/convert-dates": "0.1.0",
+    "satazor/SparkMD5": "1.0.0",
     "segmentio/analytics.js-integration": "^1.1.0"
   },
   "development": {
