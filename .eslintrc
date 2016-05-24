@@ -1,0 +1,18 @@
+{
+  "extends": "segment/browser",
+
+  "rules": {
+    "global-strict": 0,
+    "max-len": 0,
+    "strict": 1,
+    "no-bitwise": 0,
+    "no-extra-semi": 0,
+    "no-extra-parens": 0
+  },
+
+  "globals": {
+    "exports": true,
+    "module": true,
+    "require": true
+  }
+}

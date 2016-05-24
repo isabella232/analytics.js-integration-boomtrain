@@ -1,7 +1,6 @@
 
 var Analytics = require('analytics.js-core').constructor;
 var integration = require('analytics.js-integration');
-var sandbox = require('clear-env');
 var tester = require('analytics.js-integration-tester');
 var Boomtrain = require('../lib/');
 
@@ -109,7 +108,7 @@ describe('Boomtrain', function() {
       });
 
       it('should get page URL and call _bt.track with correct model and ID', function() {
-        analytics.page('Home Page', { url:'https://marketingreads.com/deloitte-digital-buys-creative-agency-heat/' });
+        analytics.page('Home Page', { url: 'https://marketingreads.com/deloitte-digital-buys-creative-agency-heat/' });
         analytics.called(window._bt.track, 'viewed', { id: '602265785760ac3ae5c2bb6909172b2c', model: 'blog' });
       });
     });
