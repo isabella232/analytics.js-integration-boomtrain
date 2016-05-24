@@ -9,7 +9,7 @@ describe('Boomtrain', function() {
   var analytics;
   var boomtrain;
   var options = {
-    appId: '324fa582528ea3dbc96bd7e94a2d5b61'
+    apiKey: '324fa582528ea3dbc96bd7e94a2d5b61'
   };
 
   beforeEach(function() {
@@ -30,7 +30,7 @@ describe('Boomtrain', function() {
   it('should have the right settings', function() {
     analytics.compare(Boomtrain, integration('Boomtrain')
       .global('_bt')
-      .option('appId', ''));
+      .option('apiKey', ''));
   });
 
   describe('before loading', function() {
