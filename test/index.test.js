@@ -66,27 +66,39 @@ describe('Boomtrain', function() {
     describe('#identify', function() {
       beforeEach(function() {
         analytics.stub(window._bt, 'identify');
+        analytics.stub(window._bt.person, 'set');
       });
 
       it('should send an id', function() {
         analytics.identify('id');
-        analytics.called(window._bt.identify, { id: 'id' });
+        analytics.called(window._bt.person.set, { id: 'id' });
       });
 
       it('should not send only traits', function() {
         analytics.identify({ trait: true });
-        analytics.didNotCall(window._bt.identify);
+        analytics.didNotCall(window._bt.person.set);
       });
 
       it('should send an id and traits', function() {
         analytics.identify('id', { trait: true, email: 'jaimal@boomtrain.com' });
-        analytics.called(window._bt.identify, { id: 'id', trait: true, email: 'jaimal@boomtrain.com' });
+        analytics.called(window._bt.person.set, { id: 'id', trait: true, email: 'jaimal@boomtrain.com' });
+      });
+
+      it('should not call _bt.identify without an app_member_id', function() {
+        analytics.identify('id', { trait: true, email: 'jaimal@boomtrain.com' });
+        analytics.didNotCall(window._bt.identify);
+      });
+
+      it('should call _bt.identify with an app_member_id', function() {
+        var user_id = 'fake_app_member_id';
+        analytics.identify('id', { trait: true, email: 'jaimal@boomtrain.com', user_id: user_id });
+        analytics.called(window._bt.identify, user_id);
       });
 
       it('should convert dates to unix timestamps', function() {
         var date = new Date();
         analytics.identify('id', { date: date });
-        analytics.called(window._bt.identify, {
+        analytics.called(window._bt.person.set, {
           id: 'id',
           date: Math.floor(date / 1000)
         });
@@ -95,7 +107,7 @@ describe('Boomtrain', function() {
       it('should alias created to created_at', function() {
         var date = new Date();
         analytics.identify('id', { created: date });
-        analytics.called(window._bt.identify, {
+        analytics.called(window._bt.person.set, {
           id: 'id',
           created_at: Math.floor(date / 1000)
         });
