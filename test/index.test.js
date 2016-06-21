@@ -1,7 +1,8 @@
+'use strict';
 
-var Analytics = require('analytics.js-core').constructor;
-var integration = require('analytics.js-integration');
-var tester = require('analytics.js-integration-tester');
+var Analytics = require('@segment/analytics.js-core').constructor;
+var integration = require('@segment/analytics.js-integration');
+var tester = require('@segment/analytics.js-integration-tester');
 var Boomtrain = require('../lib/');
 
 describe('Boomtrain', function() {
@@ -94,7 +95,7 @@ describe('Boomtrain', function() {
 
       it('should alias created to created_at', function() {
         var date = new Date();
-        analytics.identify('id', { created: date });
+        analytics.identify('id', { createdAt: date });
         analytics.called(window._bt.identify, {
           id: 'id',
           created_at: Math.floor(date / 1000)
@@ -104,9 +105,13 @@ describe('Boomtrain', function() {
 
     describe('#page', function() {
       beforeEach(function() {
+        var meta = document.createElement('meta');
+        meta.setAttribute('property', 'og:type');
+        meta.setAttribute('content', 'blog');
+        document.getElementsByTagName('head')[0].appendChild(meta);
         analytics.stub(window._bt, 'track');
       });
-
+      // todo: add another test for when the property og:type isn't available
       it('should get page URL and call _bt.track with correct model and ID', function() {
         analytics.page('Home Page', { url: 'https://marketingreads.com/deloitte-digital-buys-creative-agency-heat/' });
         analytics.called(window._bt.track, 'viewed', { id: '602265785760ac3ae5c2bb6909172b2c', model: 'blog' });
