@@ -85,14 +85,9 @@ describe('Boomtrain', function() {
         analytics.called(window._bt.person.set, { id: 'id', trait: true, email: 'jaimal@boomtrain.com' });
       });
 
-      it('should not call _bt.identify without an app_member_id', function() {
-        analytics.identify('id', { trait: true, email: 'jaimal@boomtrain.com' });
-        analytics.didNotCall(window._bt.identify);
-      });
-
       it('should call _bt.identify with an app_member_id', function() {
         var user_id = 'fake_app_member_id';
-        analytics.identify('id', { trait: true, email: 'jaimal@boomtrain.com', user_id: user_id });
+        analytics.identify(user_id, { trait: true, email: 'jaimal@boomtrain.com' });
         analytics.called(window._bt.identify, user_id);
       });
 
