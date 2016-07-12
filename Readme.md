@@ -1,6 +1,6 @@
 Boomtrain is a predictive intelligence platform for marketers that leverages machine learning to drive increased clicks, engagement and revenue through customer communications. [Visit Website](http://boomtrain.com).
 
-The Boomtrain integration with Segment.io supports the `identify`, `track` and `page ` methods.  Our Javascript integration code is open sourced on Github. [Feel free to check it out](https://github.com/boomtrain/segmentio_integration).
+The Boomtrain integration with Segment.io supports the `identify`, `track` and `page` methods.  Our Javascript integration code is open sourced on Github. [Feel free to check it out](https://github.com/boomtrain/segmentio_integration).
 
 ## Getting Started
 Steps to connect.
@@ -17,7 +17,7 @@ When you turn on Boomtrain in Segment, this is what happens:
 - To start sending custom events and user data, use the Javascript methods described below.
 
 ## Identify
-When you call [`identify`](https://segment.com/docs/spec/identify) on analytics.js, we call `identify` on the Boomtrain Javascript library. A `userId()` must be specified.  For additional details about the Boomtrain `identify` method see [this article](https://boomtrain.readme.io/docs/identifyunique_userid) on the Boomtrain Developer Documentation.
+When you call [`identify`](https://segment.com/docs/spec/identify) on analytics.js, we call `identify` on the Boomtrain Javascript library with the `userId`, and `person.set` on the Boomtrain Javascript Library with the `traits` object. A `userId` must be specified (first parameter).  For additional details about the Boomtrain `identify` and `person.set` methods see [this article](https://boomtrain.readme.io/docs/track-event) and [this article](https://boomtrain.readme.io/docs/personset-attributes-callback) on the Boomtrain Developer Documentation.
 
 ## Track
 When you call [`track`](https://segment.com/docs/spec/track), we will send the `event` you specify to the `track` method on the Boomtrain Javascript library, along with the properties you provide.  For additional details about the Boomtrain `track` method see [this article](https://boomtrain.readme.io/docs/track-an-activity-1) on the Boomtrain Developer Documentation.
