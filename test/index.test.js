@@ -66,13 +66,12 @@ describe('Boomtrain', function() {
 
     describe('#identify', function() {
       beforeEach(function() {
-        analytics.stub(window._bt, 'identify');
         analytics.stub(window._bt.person, 'set');
       });
 
       it('should send an id', function() {
-        analytics.identify('id');
-        analytics.called(window._bt.person.set, { id: 'id' });
+        analytics.identify('userId');
+        analytics.called(window._bt.person.set, { id: 'userId' , email:'userId' });
       });
 
       it('should not send only traits', function() {
@@ -85,16 +84,23 @@ describe('Boomtrain', function() {
         analytics.called(window._bt.person.set, { id: 'id', trait: true, email: 'jaimal@boomtrain.com' });
       });
 
-      it('should call _bt.identify with an app_member_id', function() {
+      it('should call _bt.person.set with a specified email', function() {
         var user_id = 'fake_app_member_id';
         analytics.identify(user_id, { trait: true, email: 'jaimal@boomtrain.com' });
-        analytics.called(window._bt.identify, user_id);
+        analytics.called(window._bt.person.set, { trait: true, email: 'jaimal@boomtrain.com', id:user_id });
+      });
+
+      it('should call _bt.person.set with default email', function() {
+        var user_id = 'fake_app_member_id';
+        analytics.identify(user_id, { trait: true });
+        analytics.called(window._bt.person.set, { trait: true, email: user_id, id: user_id });
       });
 
       it('should convert dates to unix timestamps', function() {
         var date = new Date();
         analytics.identify('id', { date: date });
         analytics.called(window._bt.person.set, {
+          email: 'id',
           id: 'id',
           date: Math.floor(date / 1000)
         });
@@ -104,6 +110,7 @@ describe('Boomtrain', function() {
         var date = new Date();
         analytics.identify('id', { createdAt: date });
         analytics.called(window._bt.person.set, {
+          email: 'id',
           id: 'id',
           created_at: Math.floor(date / 1000)
         });
@@ -118,6 +125,10 @@ describe('Boomtrain', function() {
       it('should get page URL and call _bt.track with correct model and ID', function() {
         analytics.page('Home Page', { url: 'https://marketingreads.com/deloitte-digital-buys-creative-agency-heat/', model: 'blog' });
         analytics.called(window._bt.track, 'viewed', { id: '602265785760ac3ae5c2bb6909172b2c', model: 'blog' });
+      });
+      it('should use specified model and ids without Name parameter', function() {
+        analytics.page({ id:'test_id', model: 'blog' });
+        analytics.called(window._bt.track, 'viewed', { id: 'test_id', model: 'blog' });
       });
     });
     describe('#track', function() {
