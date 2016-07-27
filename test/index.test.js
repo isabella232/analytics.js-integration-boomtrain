@@ -70,8 +70,8 @@ describe('Boomtrain', function() {
       });
 
       it('should send an id', function() {
-        analytics.identify('userId');
-        analytics.called(window._bt.person.set, { id: 'userId' , email:'userId' });
+        analytics.identify('jacob@boomtrain.com');
+        analytics.called(window._bt.person.set, { id: 'jacob@boomtrain.com' , email:'jacob@boomtrain.com' });
       });
 
       it('should not send only traits', function() {
@@ -79,28 +79,27 @@ describe('Boomtrain', function() {
         analytics.didNotCall(window._bt.person.set);
       });
 
-      it('should send an id and traits', function() {
+      it('should send an id, traits, and email (from object)', function() {
         analytics.identify('id', { trait: true, email: 'jaimal@boomtrain.com' });
         analytics.called(window._bt.person.set, { id: 'id', trait: true, email: 'jaimal@boomtrain.com' });
       });
 
-      it('should call _bt.person.set with a specified email', function() {
+      it('should send a specified email', function() {
         var user_id = 'fake_app_member_id';
         analytics.identify(user_id, { trait: true, email: 'jaimal@boomtrain.com' });
-        analytics.called(window._bt.person.set, { trait: true, email: 'jaimal@boomtrain.com', id:user_id });
+        analytics.called(window._bt.person.set, { trait: true, email: 'jaimal@boomtrain.com', id: user_id });
       });
 
-      it('should call _bt.person.set with default email', function() {
-        var user_id = 'fake_app_member_id';
-        analytics.identify(user_id, { trait: true });
-        analytics.called(window._bt.person.set, { trait: true, email: user_id, id: user_id });
+      it('should not send id as email (if id is an invalid email)', function() {
+        var user_id = 'invalid_email';
+        analytics.identify( user_id, { trait: true });
+        analytics.called(window._bt.person.set, { trait: true, id: user_id });
       });
 
       it('should convert dates to unix timestamps', function() {
         var date = new Date();
         analytics.identify('id', { date: date });
         analytics.called(window._bt.person.set, {
-          email: 'id',
           id: 'id',
           date: Math.floor(date / 1000)
         });
@@ -110,7 +109,6 @@ describe('Boomtrain', function() {
         var date = new Date();
         analytics.identify('id', { createdAt: date });
         analytics.called(window._bt.person.set, {
-          email: 'id',
           id: 'id',
           created_at: Math.floor(date / 1000)
         });
