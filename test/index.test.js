@@ -92,8 +92,8 @@ describe('Boomtrain', function() {
 
       it('should not send id as email (if id is an invalid email)', function() {
         var user_id = 'invalid_email';
-        analytics.identify( user_id, { trait: true });
-        analytics.called(window._bt.person.set, { trait: true, id: user_id });
+        analytics.identify(user_id, { trait: true });
+        analytics.called(window._bt.person.set, { trait: true, id: user_id, email: undefined });
       });
 
       it('should convert dates to unix timestamps', function() {
@@ -101,7 +101,8 @@ describe('Boomtrain', function() {
         analytics.identify('id', { date: date });
         analytics.called(window._bt.person.set, {
           id: 'id',
-          date: Math.floor(date / 1000)
+          date: Math.floor(date / 1000),
+          email: undefined
         });
       });
 
@@ -110,7 +111,8 @@ describe('Boomtrain', function() {
         analytics.identify('id', { createdAt: date });
         analytics.called(window._bt.person.set, {
           id: 'id',
-          created_at: Math.floor(date / 1000)
+          created_at: Math.floor(date / 1000),
+          email: undefined
         });
       });
     });
@@ -124,7 +126,7 @@ describe('Boomtrain', function() {
         analytics.page('Home Page', { url: 'https://marketingreads.com/deloitte-digital-buys-creative-agency-heat/', model: 'blog' });
         analytics.called(window._bt.track, 'viewed', { id: '602265785760ac3ae5c2bb6909172b2c', model: 'blog' });
       });
-      it('should use specified model and ids without Name parameter', function() {
+      it('should use specified model and ids', function() {
         analytics.page({ id:'test_id', model: 'blog' });
         analytics.called(window._bt.track, 'viewed', { id: 'test_id', model: 'blog' });
       });
