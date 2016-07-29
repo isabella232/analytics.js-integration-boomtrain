@@ -123,12 +123,15 @@ describe('Boomtrain', function() {
       });
 
       it('should get page URL and call _bt.track with correct model and ID', function() {
+        var referrer = window.document.referrer;
         analytics.page('Home Page', { url: 'https://marketingreads.com/deloitte-digital-buys-creative-agency-heat/', model: 'blog' });
-        analytics.called(window._bt.track, 'viewed', { id: '602265785760ac3ae5c2bb6909172b2c', model: 'blog' });
+        analytics.called(window._bt.track, 'viewed', { name: 'Home Page', id: '602265785760ac3ae5c2bb6909172b2c', model: 'blog', url: 'https://marketingreads.com/deloitte-digital-buys-creative-agency-heat/', referrer: referrer, search: "", title: "", path: "/context.html" });
       });
       it('should use specified model and ids', function() {
+        var url = window.location.href;
+        var referrer = window.document.referrer;
         analytics.page({ id:'test_id', model: 'blog' });
-        analytics.called(window._bt.track, 'viewed', { id: 'test_id', model: 'blog' });
+        analytics.called(window._bt.track, 'viewed', { id: 'test_id', model: 'blog', url: url, referrer: referrer, search: "", title: "", path: "/context.html" });
       });
     });
     describe('#track', function() {
