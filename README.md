@@ -8,7 +8,7 @@ Steps to connect.
  - Enter your Boomtrain API Key.  
 
 If you're not sure where to find your Boomtrain API Key, contact [Boomtrain Support](mailto:support@boomtrain.com) or your Boomtrain CSM directly.
- 
+
 When you turn on Boomtrain in Segment, this is what happens:
 - The Boomtrain snippet will start asynchronously loading Boomtrain's Javascript library onto your page.
 - Once loaded, the Boomtrain Javascript library will automatically start sending events to the Boomtrain system indicating that the current page has been viewed.
@@ -16,7 +16,7 @@ When you turn on Boomtrain in Segment, this is what happens:
 - To start sending custom events and user data, use the Javascript methods described below.
 
 ## Identify
-When you call [`identify`](https://segment.com/docs/spec/identify) on analytics.js, we call `identify` on the Boomtrain Javascript library with the `userId`, and `person.set` on the Boomtrain Javascript Library with the `traits` object. A `userId` must be specified (first parameter).  For additional details about the Boomtrain `identify` and `person.set` methods see [this article](https://boomtrain.readme.io/docs/track-event) and [this article](https://boomtrain.readme.io/docs/personset-attributes-callback) on the Boomtrain Developer Documentation.
+When you call [`identify`](https://segment.com/docs/spec/identify) on analytics.js, we call `person.set` on the Boomtrain Javascript Library with the `traits` object. A `userId` must be specified.  For additional details about the Boomtrain `person.set` methods see [this article](https://boomtrain.readme.io/docs/personset-attributes-callback) on the Boomtrain Developer Documentation.
 
 ## Track
 When you call [`track`](https://segment.com/docs/spec/track), we will send the `event` you specify to the `track` method on the Boomtrain Javascript library, along with the properties you provide.  For additional details about the Boomtrain `track` method see [this article](https://boomtrain.readme.io/docs/track-an-activity-1) on the Boomtrain Developer Documentation.

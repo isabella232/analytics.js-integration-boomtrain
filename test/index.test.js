@@ -66,13 +66,12 @@ describe('Boomtrain', function() {
 
     describe('#identify', function() {
       beforeEach(function() {
-        analytics.stub(window._bt, 'identify');
         analytics.stub(window._bt.person, 'set');
       });
 
       it('should send an id', function() {
-        analytics.identify('id');
-        analytics.called(window._bt.person.set, { id: 'id' });
+        analytics.identify('jacob@boomtrain.com');
+        analytics.called(window._bt.person.set, { id: 'jacob@boomtrain.com' , email:'jacob@boomtrain.com' });
       });
 
       it('should not send only traits', function() {
@@ -80,15 +79,21 @@ describe('Boomtrain', function() {
         analytics.didNotCall(window._bt.person.set);
       });
 
-      it('should send an id and traits', function() {
+      it('should send an id, traits, and email (from object)', function() {
         analytics.identify('id', { trait: true, email: 'jaimal@boomtrain.com' });
         analytics.called(window._bt.person.set, { id: 'id', trait: true, email: 'jaimal@boomtrain.com' });
       });
 
-      it('should call _bt.identify with an app_member_id', function() {
+      it('should send a specified email', function() {
         var user_id = 'fake_app_member_id';
         analytics.identify(user_id, { trait: true, email: 'jaimal@boomtrain.com' });
-        analytics.called(window._bt.identify, user_id);
+        analytics.called(window._bt.person.set, { trait: true, email: 'jaimal@boomtrain.com', id: user_id });
+      });
+
+      it('should not send id as email (if id is an invalid email)', function() {
+        var user_id = 'invalid_email';
+        analytics.identify(user_id, { trait: true });
+        analytics.called(window._bt.person.set, { trait: true, id: user_id, email: undefined });
       });
 
       it('should convert dates to unix timestamps', function() {
@@ -96,7 +101,8 @@ describe('Boomtrain', function() {
         analytics.identify('id', { date: date });
         analytics.called(window._bt.person.set, {
           id: 'id',
-          date: Math.floor(date / 1000)
+          date: Math.floor(date / 1000),
+          email: undefined
         });
       });
 
@@ -105,7 +111,8 @@ describe('Boomtrain', function() {
         analytics.identify('id', { createdAt: date });
         analytics.called(window._bt.person.set, {
           id: 'id',
-          created_at: Math.floor(date / 1000)
+          created_at: Math.floor(date / 1000),
+          email: undefined
         });
       });
     });
@@ -120,8 +127,15 @@ describe('Boomtrain', function() {
       });
       // todo: add another test for when the property og:type isn't available
       it('should get page URL and call _bt.track with correct model and ID', function() {
+        var referrer = window.document.referrer;
         analytics.page('Home Page', { url: 'https://marketingreads.com/deloitte-digital-buys-creative-agency-heat/', model: 'blog' });
-        analytics.called(window._bt.track, 'viewed', { id: '602265785760ac3ae5c2bb6909172b2c', model: 'blog' });
+        analytics.called(window._bt.track, 'viewed', { name: 'Home Page', id: '602265785760ac3ae5c2bb6909172b2c', model: 'blog', url: 'https://marketingreads.com/deloitte-digital-buys-creative-agency-heat/', referrer: referrer, search: '', title: '', path: '/context.html' });
+      });
+      it('should use specified model and ids', function() {
+        var url = window.location.href;
+        var referrer = window.document.referrer;
+        analytics.page({ id:'test_id', model: 'blog' });
+        analytics.called(window._bt.track, 'viewed', { id: 'test_id', model: 'blog', url: url, referrer: referrer, search: '', title: '', path: '/context.html' });
       });
     });
     describe('#track', function() {
